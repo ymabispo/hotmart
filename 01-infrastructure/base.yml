@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+  proxy:
+    image: traefik:v1.6.4-alpine
+    command:
+      - "--api"
+      - "--defaultentrypoints=http"
+      - "--docker"
+      - "--docker.swarmMode=true"
+      - "--docker.exposedbydefault=false"
+      - "--docker.domain=amazonaws.com"
+      - "--docker.watch=true" 
+      - "--logLevel=DEBUG"
+    ports:
+      - "9998:8080"
+      - "80:80"
+    stop_grace_period: 10s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - traefik-net
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      placement:
+        constraints:
+          - node.role == manager
+networks:
+  traefik-net:
+    driver: overlay
+    external: true
