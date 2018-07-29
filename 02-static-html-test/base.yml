@@ -6,6 +6,7 @@ services:
     networks:
       - traefik-net
     deploy:
+      replicas: 2
       labels:
         - "traefik.backend=app-forty"
         - "traefik.frontend.rule=PathPrefixStrip:/forty"
@@ -20,6 +21,7 @@ services:
     networks:
       - traefik-net
     deploy:
+      replicas: 2
       labels:
         - "traefik.backend=app-phantom"
         - "traefik.frontend.rule=PathPrefixStrip:/phantom"
@@ -34,6 +36,7 @@ services:
     networks:
       - traefik-net 
     deploy:
+      replicas: 2
       labels:
         - "traefik.backend=app-stellar"
         - "traefik.frontend.rule=PathPrefixStrip:/stellar"
