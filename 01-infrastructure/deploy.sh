@@ -1,2 +1,2 @@
 #!/bin/sh
-docker stack deploy -c base.yml infra-stack
+docker network create -d overlay traefik-net && docker stack deploy -c base.yml infra-stack

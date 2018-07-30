@@ -4,22 +4,13 @@ provider "aws" {
   region     = "${var.aws_region}"
 }
 
-resource "aws_instance" "docker_provider" {
-  ami           = "${var.ami_provider}"
-  instance_type = "${var.instance_type}"
-  count             = 1
-  key_name      = "${var.key_name}"
-  security_groups = ["default"]  
-  tags { Name = "Docker_Provider" }
-}
-
 resource "aws_instance" "docker_manager" {
   ami           = "${var.ami_swarm_manager}"
   instance_type = "${var.instance_type}"
   count             = 1
   key_name      = "${var.key_name}"
   security_groups = ["default"]
-  user_data = "${file("${var.bootstrap_path}")}"
+  user_data = "${file("${var.bootstrapDocker_path}")}"
   tags { Name = "Docker_Manager" }
 }
 
@@ -29,6 +20,6 @@ resource "aws_instance" "docker_worker" {
   count             = 2
   key_name      = "${var.key_name}"
   security_groups = ["default"]
-  user_data = "${file("${var.bootstrap_path}")}"
+  user_data = "${file("${var.bootstrapDocker_path}")}"
   tags { Name = "Docker_Worker" }
 }

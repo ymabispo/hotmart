@@ -3,19 +3,14 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "ami_provider" {
-  description = "Imagem a ser utilizada como provisionador"
-  default = "ami-4fffc834"
-}
-
 variable "ami_swarm_manager" {
   description = "Imagem a ser utilizada como gerenciador do swarm"
-  default = "ami-4fffc834"
+  default = "ami-0daaf0688c6f6ce2a"
 }
 
 variable "ami_swarm_worker" {
   description = "Imagem a ser utilizada como executor do swarm"
-  default = "ami-4fffc834"
+  default = "ami-0d6800db6f3005cb4"
 }
 
 variable "instance_type" {
@@ -28,7 +23,8 @@ variable "key_name" {
   default = "personalkey"
 }
 
-variable "bootstrap_path" {
+variable "bootstrapDocker_path" {
   description = "Script para instalar o docker"
   default = "docker.sh"
 }
+
