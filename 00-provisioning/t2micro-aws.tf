@@ -8,18 +8,26 @@ resource "aws_instance" "docker_manager" {
   ami           = "${var.ami_swarm_manager}"
   instance_type = "${var.instance_type}"
   count             = 1
-  key_name      = "${var.key_name}"
+  key_name      = "${var.key_name}"  
   security_groups = ["default"]
-  user_data = "${file("${var.bootstrapDocker_path}")}"
   tags { Name = "Docker_Manager" }
+  
+  provisioner "remote-exec" {
+    script = "docker.sh"
+  }
+  
 }
 
 resource "aws_instance" "docker_worker" {
   ami           = "${var.ami_swarm_worker}"
   instance_type = "${var.instance_type}"
   count             = 2
-  key_name      = "${var.key_name}"
+  key_name      = "${var.key_name}"  
   security_groups = ["default"]
-  user_data = "${file("${var.bootstrapDocker_path}")}"
-  tags { Name = "Docker_Worker" }
+  tags { Name = "Docker_Worker_${count.index}" }
+  
+  provisioner "remote-exec" {
+    script = "docker.sh"
+  }
+  
 }
