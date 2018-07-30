@@ -9,7 +9,7 @@ resource "aws_instance" "docker_provider" {
   instance_type = "${var.instance_type}"
   count             = 1
   key_name      = "${var.key_name}"
-  security_groups = ["default"]
+  security_groups = ["default"]  
   tags { Name = "Docker_Provider" }
 }
 
@@ -19,23 +19,16 @@ resource "aws_instance" "docker_manager" {
   count             = 1
   key_name      = "${var.key_name}"
   security_groups = ["default"]
+  user_data = "${file("${var.bootstrap_path}")}"
   tags { Name = "Docker_Manager" }
 }
 
-resource "aws_instance" "docker_worker_1" {
+resource "aws_instance" "docker_worker" {
   ami           = "${var.ami_swarm_worker}"
   instance_type = "${var.instance_type}"
-  count             = 1
+  count             = 2
   key_name      = "${var.key_name}"
   security_groups = ["default"]
-  tags { Name = "Docker_Worker_1" }
-}
-
-resource "aws_instance" "docker_worker_2" {
-  ami           = "${var.ami_swarm_worker}"
-  instance_type = "${var.instance_type}"
-  count             = 1
-  key_name      = "${var.key_name}"
-  security_groups = ["default"]
-  tags { Name = "Docker_Worker_2" }
+  user_data = "${file("${var.bootstrap_path}")}"
+  tags { Name = "Docker_Worker" }
 }

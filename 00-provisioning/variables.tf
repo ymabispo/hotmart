@@ -27,3 +27,8 @@ variable "key_name" {
   description = "chave para conexão SSH"
   default = "personalkey"
 }
+
+variable "bootstrap_path" {
+  description = "Script para instalar o docker"
+  default = "docker.sh"
+}

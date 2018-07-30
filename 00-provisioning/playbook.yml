@@ -2,7 +2,7 @@
   - name: Iniciar Manager Swarm
     hosts: managers
     gather_facts: False
-    remote_user: ec2-user
+    remote_user: centos
     tasks:
       - name: Iniciar Swarm
         command: docker swarm init --advertise-addr {{ inventory_hostname }}
@@ -23,7 +23,7 @@
 
   - name: Entrar no Swarm
     hosts: workers
-    remote_user: ec2-user
+    remote_user: centos
     gather_facts: False
     vars:
       token: "{{ hostvars[groups['managers'][0]]['worker_token']['stdout'] }}"
