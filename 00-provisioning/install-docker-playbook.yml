@@ -3,24 +3,24 @@
   user: centos
   become: yes
   tasks:
-  - name: "Installing Docker Prerequisite packages"
+  - name: "Instalando pre-requisitos"
     yum:
       name: "{{ item }}"
       state: latest
     with_items:
-        - yum-utils 
+        - yum-utils
         - device-mapper-persistent-data
         - lvm2
-  - name: "Configuring docker-ce repo"
+  - name: "Configurando repositorio docker"
     get_url:
       url: https://download.docker.com/linux/centos/docker-ce.repo
       dest: /etc/yum.repos.d/docker-ce.repo
       mode: 0644
-  - name: "Installing Docker latest version"
+  - name: "Instalando ultima versao do docker"
     yum:
       name: docker-ce
       state: present
-  - name: " Starting and Enabling Docker service"
+  - name: "Iniciando e habilitando Docker service"
     service:
       name: docker
       state: started
