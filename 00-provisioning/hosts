@@ -1,0 +1,6 @@
+[manager]
+IP Privado do Manager
+
+[workers]
+IP Privado do worker 0
+IP Privado do worker 1
