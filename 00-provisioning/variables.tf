@@ -20,11 +20,5 @@ variable "instance_type" {
 
 variable "key_name" {
   description = "chave para conexão SSH"
-  default = "personalkey"
+  default = "hotmartkey"
 }
-
-variable "bootstrapDocker_path" {
-  description = "Script para instalar o docker"
-  default = "docker.sh"
-}
-

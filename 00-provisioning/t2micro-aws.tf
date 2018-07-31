@@ -12,10 +12,7 @@ resource "aws_instance" "docker_manager" {
   security_groups = ["default"]
   tags { Name = "Docker_Manager" }
   
-  provisioner "remote-exec" {
-    script = "docker.sh"
-  }
-  
+   
 }
 
 resource "aws_instance" "docker_worker" {
@@ -26,8 +23,5 @@ resource "aws_instance" "docker_worker" {
   security_groups = ["default"]
   tags { Name = "Docker_Worker_${count.index}" }
   
-  provisioner "remote-exec" {
-    script = "docker.sh"
-  }
-  
+    
 }
