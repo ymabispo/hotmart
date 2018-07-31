@@ -4,10 +4,10 @@ Desafio DevOps
 Prezados, utilizei como cloud a AmazonAWS e máquinas com Linux CentOS, estou levando em consideração que já existe um security group default com as portas tcp 22, 80, 9998, 9999 liberadas para inbound e todo o tráfego dentro do SG é livre. Se tratando de um ambiente sendo criado do zero apenas a máquina de provisionamento com terraform e ansible seria criada manualmente enquanto todo o resto dos recursos seria criado automaticamente.
 
 A pasta 00-provisioning contém os arquivos para criar os recursos necessários à execução do ambiente.
-- Os arquivos t2micro-aws.tf e variables.tf são arquivos terraform que criaram as instâncias na aws
-- O arquivo deploy.sh quando executado implanta as mudanças propostas pelo terraform 
-- O arquivo docker.sh é utilizado pelo terraform para instalar o docker nas VMs
-- O arquivo playbook.yml é utilizado pelo ansible e inicia o cluster docker utilizando swarm com 1 nó manager e 2 workers
+- Os arquivos t2micro-aws.tf e variables.tf são arquivos terraform que criaram as instâncias na aws- 
+- O arquivo install-docker-playbook.yml é o playbook ansible para instalar o docker nas 3 instancias aws
+- O arquivo join-docker-playbook.yml é o playbook ansible para iniciar o cluster swarm e conectar os workers no manager
+- O arquivo hosts é apenas um exemplo de como as instancias foram organizadas para o ansible, é muito importante utilizar o ip privado das instancias e não o publico, dessa forma o join dos workers no manager terá sucesso.
 
 
 A pasta 01-infrastructure contém os arquivos necessários para implantar a solução de LoadBalance e resolução de DNS chamada Traefik, a cada novo deploy de stacks no cluster o traefik reconhece e cria automaticamente uma rota para essa stack no LoadBalance conectando a rede externa com a rede interna como um proxy automático, outras soluções como NGINX podem resolver esse problema mas não de forma automática e grátis. Sei que esse não é caso mas o traefik também provê uma solução para aplicações statefull com alta disponibilidade através de stick sessions mantendo a sessão do usuário sempre em conexão com o mesmo container. Mais informações https://docs.traefik.io/
@@ -24,7 +24,9 @@ A pasta 02-static-html-test contém as aplicações html estáticas solicitadas para
 - O arquivo deploy.sh quando executado implanta a stack das 3 aplicações
 
 
-A pasta 03-cluster-visualizer apenas inicia o container que possibilita a visualização da infraestrutura e pode ser acessado através da porta 9999 após sua stack ser implantada pelo arquivo deploy.sh
+A pasta 03-cluster-visualizer inicia o container que possibilita a visualização da infraestrutura e pode ser acessado através da porta 9999 após sua stack ser implantada pelo arquivo deploy.sh
+
+OBS: Todas as requisições devem ser preferencialmente direcionadas ao nó manager.
 
 
 
